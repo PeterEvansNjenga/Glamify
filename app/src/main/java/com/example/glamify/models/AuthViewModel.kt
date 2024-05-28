@@ -8,7 +8,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.navigation.NavHostController
-import com.example.glamify.navigation.*
+import com.example.glamify.data.User
+import com.example.glamify.navigation.LOGIN_URL
+import com.example.glamify.navigation.SPLASH_URL
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -26,40 +28,44 @@ class AuthViewModel(private val navController: NavHostController, private val co
     @SuppressLint("RestrictedApi")
     fun signup(name: String, email: String, password: String) {
         progress.show()
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-            val userId = mAuth.currentUser!!.uid
-            val userProfile = com.example.glamify.data.User(name, email, password, userId)
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val userId = mAuth.currentUser!!.uid
+                val userProfile = User(name, email, password, userId)
 
-            // Save user ID to shared preferences to indicate successful sign-up
-            sharedPreferences.edit().putBoolean(KEY_FIRST_TIME_USER, false).apply()
+                // Save user ID to shared preferences to indicate successful sign-up
+                sharedPreferences.edit().putBoolean(KEY_FIRST_TIME_USER, false).apply()
 
-            // Create a reference table called Users inside of the Firebase database
-            val usersRef = FirebaseDatabase.getInstance().getReference()
-                .child("Users_s/$userId")
-            usersRef.setValue(userProfile).addOnCompleteListener {
-                progress.dismiss()
-                if (it.isSuccessful) {
-                    Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
-                    navController.navigate(VIEW_USER_SHOE)
-                } else {
-                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                // Save user profile to Firebase database
+                val usersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId)
+                usersRef.setValue(userProfile).addOnCompleteListener { innerTask ->
+                    progress.dismiss()
+                    if (innerTask.isSuccessful) {
+                        Toast.makeText(context, "Sign up successful", Toast.LENGTH_SHORT).show()
+                        navController.navigate(SPLASH_URL)
+                    } else {
+                        Toast.makeText(context, "Error signing up", Toast.LENGTH_SHORT).show()
+                    }
                 }
+            } else {
+                progress.dismiss()
+                Toast.makeText(context, "Error creating account", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     fun login(email: String, password: String) {
         progress.show()
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             progress.dismiss()
-            if (it.isSuccessful) {
+            if (task.isSuccessful) {
                 // Save user ID to shared preferences to indicate successful login
                 sharedPreferences.edit().putBoolean(KEY_FIRST_TIME_USER, false).apply()
 
-                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
-                navController.navigate(VIEW_USER_SHOE)
+                Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
+                navController.navigate(SPLASH_URL)
             } else {
-                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Error logging in", Toast.LENGTH_SHORT).show()
             }
         }
     }

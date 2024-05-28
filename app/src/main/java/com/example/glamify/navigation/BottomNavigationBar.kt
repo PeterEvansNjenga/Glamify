@@ -1,22 +1,31 @@
 package com.example.glamify.navigation
 
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.BottomNavigation
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.BottomNavigationItem
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Icon
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.glamify.navigation.BottomNavItem.About
+import com.example.glamify.navigation.BottomNavItem.Account
+import com.example.glamify.navigation.BottomNavItem.AddShoes
+import com.example.glamify.navigation.BottomNavItem.Home
+import com.example.glamify.navigation.BottomNavItem.ViewShoes
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
     val items = listOf(
-        BottomNavItem.Home,
-        BottomNavItem.AddShoes,
-        BottomNavItem.ViewShoes,
-        BottomNavItem.Account,
-        BottomNavItem.About
+        Home,
+        AddShoes,
+        ViewShoes,
+        Account,
+        About
     )
 
     BottomNavigation(
@@ -26,20 +35,22 @@ fun BottomNavigationBar(navController: NavHostController) {
         val navBackStackEntry = navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry.value?.destination?.route
 
-        items.forEach { item ->
-            BottomNavigationItem(
-                icon = { Icon(imageVector = item.icon, contentDescription = item.title) },
-                label = { Text(text = item.title) },
-                selected = currentRoute == item.route,
-                onClick = {
-                    navController.navigate(item.route) {
-                        popUpTo(navController.graph.startDestinationId)
-                        launchSingleTop = true
-                    }
-                },
-                selectedContentColor = Color.Blue,
-                unselectedContentColor = Color.Black
-            )
+        if (currentRoute !in listOf(LOGIN_URL, SIGNUP_URL, SPLASH_URL)) {
+            items.forEach { item ->
+                BottomNavigationItem(
+                    icon = { Icon(imageVector = item.icon, contentDescription = item.title) },
+                    label = { Text(text = item.title) },
+                    selected = currentRoute == item.route,
+                    onClick = {
+                        navController.navigate(item.route) {
+                            popUpTo(navController.graph.startDestinationId)
+                            launchSingleTop = true
+                        }
+                    },
+                    selectedContentColor = Color.Blue,
+                    unselectedContentColor = Color.Black
+                )
+            }
         }
     }
 }

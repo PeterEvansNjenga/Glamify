@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.glamify.ui.theme.screens.login
 
 import android.widget.Toast
@@ -85,7 +87,8 @@ fun LoginScreen(navController: NavHostController) {
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                textColor = Color.White,
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
                 focusedBorderColor = secondary_blue,
                 unfocusedBorderColor = main_green,
                 focusedLeadingIconColor = secondary_blue,
@@ -116,7 +119,8 @@ fun LoginScreen(navController: NavHostController) {
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                textColor = Color.White,
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
                 focusedBorderColor = secondary_blue,
                 unfocusedBorderColor = main_green,
                 focusedLeadingIconColor = secondary_blue,

@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.glamify.ui.theme.screens.signup
 
 import android.widget.Toast
@@ -87,7 +89,8 @@ fun SignupScreen(navController: NavHostController) {
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                textColor = Color.White,
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
                 focusedBorderColor = secondary_blue,
                 unfocusedBorderColor = main_green,
                 focusedLeadingIconColor = secondary_blue,
@@ -117,7 +120,8 @@ fun SignupScreen(navController: NavHostController) {
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                textColor = Color.White,
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
                 focusedBorderColor = secondary_blue,
                 unfocusedBorderColor = main_green,
                 focusedLeadingIconColor = secondary_blue,
@@ -148,7 +152,8 @@ fun SignupScreen(navController: NavHostController) {
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                textColor = Color.White,
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
                 focusedBorderColor = secondary_blue,
                 unfocusedBorderColor = main_green,
                 focusedLeadingIconColor = secondary_blue,

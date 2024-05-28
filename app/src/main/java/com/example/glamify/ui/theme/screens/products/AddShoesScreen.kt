@@ -214,7 +214,7 @@ fun InputField(
         leadingIcon = { Icon(imageVector = leadingIcon, contentDescription = null) },
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            textColor = Color.White,
+            focusedTextColor = Color.White,
             focusedBorderColor = secondary_blue,
             unfocusedBorderColor = main_green,
             focusedLeadingIconColor = secondary_blue,
