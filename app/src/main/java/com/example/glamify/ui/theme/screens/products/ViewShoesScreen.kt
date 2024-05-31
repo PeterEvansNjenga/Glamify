@@ -2,19 +2,39 @@ package com.example.glamify.ui.theme.screens.products
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -24,46 +44,47 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import coil.compose.rememberAsyncImagePainter
-import com.example.glamify.models.ProductViewModel
+import coil.compose.rememberImagePainter
 import com.example.glamify.data.Product
-import com.example.glamify.ui.theme.*
+import com.example.glamify.models.ProductViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun ViewShoesScreen(navController: NavHostController) {
-    val context = LocalContext.current
-    val shoeRepository = remember { ProductViewModel(navController, context) }
+    MaterialTheme {
+        val context = LocalContext.current
+        val shoeRepository = remember { ProductViewModel(navController, context) }
 
-    val emptyShoeState = remember { mutableStateOf(Product("", "", "", "", "", "", "", "")) }
-    val shoesListState = remember { mutableStateListOf<Product>() }
+        val emptyShoeState = remember { mutableStateOf(Product("", "", "", "", "", "", "", "")) }
+        val shoesListState = remember { mutableStateListOf<Product>() }
 
-    val shoes = shoeRepository.allProducts(emptyShoeState, shoesListState)
+        val shoes = shoeRepository.allProducts(emptyShoeState, shoesListState)
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(home_black)
-    ) {
-        var isPopupDismissed by remember { mutableStateOf(false) }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colors.background)
+        ) {
+            var isPopupDismissed by remember { mutableStateOf(false) }
 
-        if (!isPopupDismissed) {
-            ScreenWithPopup {
-                isPopupDismissed = true
-            }
-        } else {
-            Spacer(modifier = Modifier.height(15.dp))
+            if (!isPopupDismissed) {
+                ScreenWithPopup {
+                    isPopupDismissed = true
+                }
+            } else {
+                Spacer(modifier = Modifier.height(15.dp))
 
-            val currentUser = FirebaseAuth.getInstance().currentUser
-            val currentUserId = currentUser?.uid
+                val currentUser = FirebaseAuth.getInstance().currentUser
+                val currentUserId = currentUser?.uid
 
-            LazyColumn {
-                items(shoes) { shoe ->
-                    if (shoe.userId == currentUserId) {
-                        ShoeItem(
-                            product = shoe,
-                            shoeRepository = shoeRepository
-                        )
+                LazyColumn {
+                    items(shoes) { shoe ->
+                        if (shoe.userId == currentUserId) {
+                            ShoeItem(
+                                product = shoe,
+                                shoeRepository = shoeRepository
+                            )
+                        }
                     }
                 }
             }
@@ -76,40 +97,36 @@ fun ShoeItem(
     product: Product,
     shoeRepository: ProductViewModel
 ) {
-    Column(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(15.dp)
+            .padding(15.dp),
+        colors = CardDefaults.cardColors(containerColor = colors.onSecondary)
     ) {
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = card_green)
-        ) {
-            Column(modifier = Modifier.padding(horizontal = 10.dp)) {
-                Box(
+        Column(modifier = Modifier.padding(horizontal = 10.dp)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(280.dp)
+                    .padding(vertical = 9.dp)
+            ) {
+                Image(
+                    painter = rememberImagePainter(product.imageUrl),
+                    contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(280.dp)
-                        .padding(vertical = 9.dp)
-                ) {
-                    Image(
-                        painter = rememberAsyncImagePainter(model = product.imageUrl),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(280.dp)
-                            .clip(RoundedCornerShape(3.dp)),
-                        contentScale = ContentScale.FillBounds
-                    )
-                }
-                ShoeDetails(
-                    name = product.name,
-                    description = product.description,
-                    price = product.price,
-                    location = product.location
+                        .clip(RoundedCornerShape(3.dp)),
+                    contentScale = ContentScale.FillBounds
                 )
-                DeleteButton(productId = product.id, shoeRepository = shoeRepository)
             }
+            ShoeDetails(
+                name = product.name,
+                description = product.description,
+                price = product.price,
+                location = product.location
+            )
+            DeleteButton(productId = product.id, shoeRepository = shoeRepository)
         }
     }
 }
@@ -119,7 +136,7 @@ fun ShoeDetails(name: String, description: String, price: String, location: Stri
     Column {
         Text(
             text = "Name: $name",
-            color = secondary_blue,
+            color = colors.background,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
@@ -127,7 +144,7 @@ fun ShoeDetails(name: String, description: String, price: String, location: Stri
 
         Text(
             text = "Description: $description",
-            color = secondary_blue,
+            color = colors.background,
             fontSize = 17.sp
         )
         Spacer(modifier = Modifier.height(3.dp))
@@ -136,7 +153,7 @@ fun ShoeDetails(name: String, description: String, price: String, location: Stri
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "Price: Ksh. $price", fontSize = 17.sp)
+            Text(text = "Price: Ksh. $price", fontSize = 17.sp, color = colors.background,)
         }
         Spacer(modifier = Modifier.height(3.dp))
 
@@ -144,11 +161,11 @@ fun ShoeDetails(name: String, description: String, price: String, location: Stri
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(imageVector = Icons.Default.LocationOn, contentDescription = null, tint = secondary_blue)
+            Icon(imageVector = Icons.Default.LocationOn, contentDescription = null, tint = colors.background)
             Spacer(modifier = Modifier.width(2.dp))
             Text(
                 text = location,
-                color = secondary_blue,
+                color = colors.background,
                 fontSize = 17.sp,
                 fontWeight = FontWeight.SemiBold
             )
@@ -172,13 +189,13 @@ fun DeleteButton(productId: String, shoeRepository: ProductViewModel) {
                 onClick = {
                     shoeRepository.deleteProduct(productId)
                 },
-                colors = ButtonDefaults.buttonColors(main_green),
+                colors = ButtonDefaults.buttonColors(colors.error),
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Row {
                     Icon(imageVector = Icons.Default.Delete, contentDescription = "delete")
                     Spacer(modifier = Modifier.width(3.dp))
-                    Text(text = "Delete", color = Color.White)
+                    Text(text = "Delete", color = colors.onBackground)
                 }
             }
         }
@@ -197,7 +214,7 @@ fun ScreenWithPopup(onDismiss: () -> Unit) {
             Box(
                 modifier = Modifier
                     .padding(13.dp)
-                    .background(Color.White)
+                    .background(colors.surface)
             ) {
                 Column(
                     modifier = Modifier.padding(8.dp),
@@ -207,12 +224,12 @@ fun ScreenWithPopup(onDismiss: () -> Unit) {
                     Text(
                         text = "Hi. Here you can view all the shoes you have ever uploaded and have the ability to delete and update the shoe details.",
                         fontSize = 17.sp,
-                        color = Color.Black
+                        color = colors.onSurface
                     )
                     Text(
                         text = "NOTE: The only shoes you'll see are the ones that YOU have posted.",
                         fontSize = 17.sp,
-                        color = Color.Black
+                        color = colors.onSurface
                     )
                     Button(
                         onClick = {
@@ -222,7 +239,7 @@ fun ScreenWithPopup(onDismiss: () -> Unit) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 20.dp, vertical = 7.dp),
-                        colors = ButtonDefaults.buttonColors(main_green),
+                        colors = ButtonDefaults.buttonColors(colors.error),
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(text = "Okay", fontSize = 17.sp)
@@ -236,7 +253,5 @@ fun ScreenWithPopup(onDismiss: () -> Unit) {
 @Composable
 @Preview(showBackground = true)
 fun ViewShoesScreenPreview() {
-    WazitoECommerceTheme {
-        ViewShoesScreen(navController = rememberNavController())
-    }
+    ViewShoesScreen(navController = rememberNavController())
 }

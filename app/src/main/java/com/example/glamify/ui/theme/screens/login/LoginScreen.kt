@@ -22,7 +22,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TextFieldDefaults.outlinedTextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,7 +30,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,17 +43,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.glamify.models.AuthViewModel
 import com.example.glamify.navigation.SIGNUP_URL
-import com.example.glamify.ui.theme.home_black
-import com.example.glamify.ui.theme.main_green
-import com.example.glamify.ui.theme.secondary_blue
+import com.example.glamify.ui.theme.ThemeController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(navController: NavHostController, themeController: ThemeController) {
+    val colors = themeController.getCurrentColorPalette()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(home_black),
+            .background(colors.background),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         var email by remember { mutableStateOf("") }
@@ -66,7 +65,7 @@ fun LoginScreen(navController: NavHostController) {
             text = "Log into Account",
             textDecoration = TextDecoration.Underline,
             fontSize = 30.sp,
-            color = Color.Cyan
+            color = colors.primary
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -75,7 +74,7 @@ fun LoginScreen(navController: NavHostController) {
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            placeholder = { Text(text = "eg. abc@example.com", color = Color.White) },
+            placeholder = { Text(text = "eg. abc@example.com", color = colors.onBackground) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
@@ -86,16 +85,16 @@ fun LoginScreen(navController: NavHostController) {
                 )
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White,
-                focusedBorderColor = secondary_blue,
-                unfocusedBorderColor = main_green,
-                focusedLeadingIconColor = secondary_blue,
-                unfocusedLeadingIconColor = main_green,
-                cursorColor = Color.White,
-                focusedLabelColor = secondary_blue,
-                unfocusedLabelColor = main_green,
+            colors = outlinedTextFieldColors(
+                focusedTextColor = colors.onBackground,
+                unfocusedTextColor = colors.onBackground,
+                focusedBorderColor = colors.secondary,
+                unfocusedBorderColor = colors.background,
+                focusedLeadingIconColor = colors.secondary,
+                unfocusedLeadingIconColor = colors.primary,
+                cursorColor = colors.onBackground,
+                focusedLabelColor = colors.secondary,
+                unfocusedLabelColor = colors.primary,
             ),
             label = { Text(text = "Email") }
         )
@@ -106,7 +105,7 @@ fun LoginScreen(navController: NavHostController) {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            placeholder = { Text(text = "password", color = Color.White) },
+            placeholder = { Text(text = "password", color = colors.onBackground) },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier
                 .fillMaxWidth()
@@ -118,16 +117,16 @@ fun LoginScreen(navController: NavHostController) {
                 )
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White,
-                focusedBorderColor = secondary_blue,
-                unfocusedBorderColor = main_green,
-                focusedLeadingIconColor = secondary_blue,
-                unfocusedLeadingIconColor = main_green,
-                cursorColor = Color.White,
-                focusedLabelColor = secondary_blue,
-                unfocusedLabelColor = main_green,
+            colors = outlinedTextFieldColors(
+                focusedTextColor = colors.onBackground,
+                unfocusedTextColor = colors.onBackground,
+                focusedBorderColor = colors.secondary,
+                unfocusedBorderColor = colors.primary,
+                focusedLeadingIconColor = colors.secondary,
+                unfocusedLeadingIconColor = colors.primary,
+                cursorColor = colors.onBackground,
+                focusedLabelColor = colors.secondary,
+                unfocusedLabelColor = colors.primary,
             ),
             label = { Text(text = "Password") },
         )
@@ -147,7 +146,7 @@ fun LoginScreen(navController: NavHostController) {
                 }
             },
             shape = RoundedCornerShape(5.dp),
-            colors = ButtonDefaults.buttonColors(main_green),
+            colors = ButtonDefaults.buttonColors(colors.primary),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 30.dp, vertical = 0.dp)
@@ -168,7 +167,7 @@ fun LoginScreen(navController: NavHostController) {
             textAlign = TextAlign.Center,
             fontSize = 15.sp,
             fontFamily = FontFamily.Serif,
-            color = main_green
+            color = colors.primary
         )
     }
 }
@@ -176,5 +175,6 @@ fun LoginScreen(navController: NavHostController) {
 @Composable
 @Preview(showBackground = true)
 fun LoginScreenPreview() {
-    LoginScreen(navController = rememberNavController())
+    val themeController = ThemeController
+    LoginScreen(navController = rememberNavController(), themeController = themeController)
 }

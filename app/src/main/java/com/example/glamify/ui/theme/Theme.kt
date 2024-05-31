@@ -1,70 +1,50 @@
 package com.example.glamify.ui.theme
 
-import android.app.Activity
-import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.MaterialTheme
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.MaterialTheme.shapes
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
-import androidx.core.view.WindowCompat
-
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
-)
+import androidx.compose.ui.graphics.Color
 
 @Composable
-fun WazitoECommerceTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+fun GlamifyTheme(
+    colorPalette: AppColors,
+    darkTheme: Boolean,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
-        }
-    }
-
     MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
+        colors = if (darkTheme) darkColors(colorPalette) else lightColors(colorPalette),
+        typography = typography,
+        shapes = shapes,
         content = content
     )
 }
+
+private fun darkColors(palette: AppColors) = androidx.compose.material.darkColors(
+    primary = palette.primary,
+    onPrimary = palette.onPrimary,
+    surface = palette.surface,
+    onSurface = palette.onSurface,
+    background = palette.background,
+    onBackground = palette.onBackground,
+    secondary = palette.secondary,
+    onSecondary = palette.onSecondary,
+    error = Color(0xFFCF6679),
+    onError = Color.Black
+)
+
+private fun lightColors(palette: AppColors) = androidx.compose.material.lightColors(
+    primary = palette.primary,
+    onPrimary = palette.onPrimary,
+    surface = palette.surface,
+    onSurface = palette.onSurface,
+    background = palette.background,
+    onBackground = palette.onBackground,
+    secondary = palette.secondary,
+    onSecondary = palette.onSecondary,
+    error = Color(0xFFB00020),
+    onError = Color.White
+)

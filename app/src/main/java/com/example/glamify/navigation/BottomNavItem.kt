@@ -13,5 +13,5 @@ sealed class BottomNavItem(val route: String, val icon: ImageVector, val title: 
     object AddShoes : BottomNavItem(ADD_SHOES_URL, Icons.Default.AddCircle, "Sell")
     object ViewShoes : BottomNavItem(VIEW_SHOES_URL, Icons.AutoMirrored.Filled.List, "Uploads")
     object Account : BottomNavItem(ACCOUNT_URL, Icons.Default.AccountBox, "Account")
-    object About : BottomNavItem(ABOUT_URL, Icons.Default.Info, "Help")
+    object About : BottomNavItem(ABOUT_URL, Icons.Default.Info, "About")
 }

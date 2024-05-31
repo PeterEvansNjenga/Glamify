@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -29,14 +30,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.glamify.R
-import com.example.glamify.ui.theme.home_black
 
 @Composable
 fun AboutScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(home_black)
+            .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState())
             .padding(15.dp)
     ) {
@@ -55,7 +55,7 @@ fun AboutScreen() {
                 )
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.glamifyicon),
+                    painter = painterResource(id = R.drawable.ivo),
                     contentDescription = "top icon",
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
@@ -149,7 +149,7 @@ fun AboutScreen() {
 fun SectionHeader(text: String) {
     Text(
         text = text,
-        color = Color.Cyan,
+        color = MaterialTheme.colorScheme.primary,
         fontSize = 28.sp,
         modifier = Modifier.fillMaxWidth(),
         textAlign = TextAlign.Center,
@@ -162,12 +162,12 @@ fun SimpleText(text: String) {
     Text(
         text = text,
         fontSize = 17.sp,
-        color = Color.Yellow
+        color = MaterialTheme.colorScheme.onBackground
     )
 }
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 fun AboutScreenPreview() {
-    AboutScreen()
+        AboutScreen()
 }

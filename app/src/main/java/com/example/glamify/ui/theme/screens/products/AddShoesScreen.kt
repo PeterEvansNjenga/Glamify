@@ -22,6 +22,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Call
@@ -45,7 +47,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -63,11 +64,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.glamify.R
 import com.example.glamify.models.ProductViewModel
-import com.example.glamify.ui.theme.WazitoECommerceTheme
-import com.example.glamify.ui.theme.card_green
-import com.example.glamify.ui.theme.home_black
-import com.example.glamify.ui.theme.main_green
-import com.example.glamify.ui.theme.secondary_blue
 
 @Composable
 fun AddShoesScreen(navController: NavHostController) {
@@ -83,7 +79,7 @@ fun AddShoesScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(home_black)
+            .background(colors.background)
             .verticalScroll(rememberScrollState())
     ) {
         CenteredIconCard()
@@ -167,7 +163,7 @@ fun CenteredIconCard() {
         Card(
             modifier = Modifier.size(70.dp),
             shape = RoundedCornerShape(50),
-            colors = CardDefaults.cardColors(containerColor = card_green)
+            colors = CardDefaults.cardColors(containerColor = colors.primary)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.glamifysell),
@@ -190,7 +186,7 @@ fun TitleText(text: String) {
         textAlign = TextAlign.Center,
         fontWeight = FontWeight.SemiBold,
         fontFamily = FontFamily.SansSerif,
-        color = Color.Cyan
+        color = colors.secondary
     )
 }
 
@@ -207,23 +203,23 @@ fun InputField(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        placeholder = { Text(text = placeholder, color = Color.White) },
+        placeholder = { Text(text = placeholder, color = colors.onBackground) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 15.dp),
         leadingIcon = { Icon(imageVector = leadingIcon, contentDescription = null) },
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedTextColor = Color.White,
-            focusedBorderColor = secondary_blue,
-            unfocusedBorderColor = main_green,
-            focusedLeadingIconColor = secondary_blue,
-            unfocusedLeadingIconColor = main_green,
-            cursorColor = Color.White,
-            focusedLabelColor = secondary_blue,
-            unfocusedLabelColor = main_green,
+            focusedTextColor = colors.onBackground, // Use onBackground color from theme
+            focusedBorderColor = colors.primary, // Use primary color from theme
+            unfocusedBorderColor = colors.error, // Use error color from theme
+            focusedLeadingIconColor = colors.primary, // Use primary color from theme
+            unfocusedLeadingIconColor = colors.error, // Use error color from theme
+            cursorColor = colors.onBackground, // Use onBackground color from theme
+            focusedLabelColor = colors.primary, // Use primary color from theme
+            unfocusedLabelColor = colors.error // Use error color from theme
         ),
-        textStyle = TextStyle(color = Color.White),
+        textStyle = TextStyle(color = colors.onBackground),
         label = { Text(text = label) }
     )
 }
@@ -263,16 +259,16 @@ fun ImagePicker(
         Button(
             onClick = { imagePicker.launch("image/*") },
             shape = RoundedCornerShape(5.dp),
-            colors = ButtonDefaults.buttonColors(card_green),
+            colors = ButtonDefaults.buttonColors(colors.primary),
             modifier = Modifier
                 .height(52.dp)
                 .fillMaxWidth()
                 .padding(horizontal = 15.dp),
-            border = BorderStroke(1.dp, main_green)
+            border = BorderStroke(1.dp, colors.error)
         ) {
             Text(
                 text = "Select Shoe Image",
-                color = secondary_blue,
+                color = colors.primaryVariant,
                 fontSize = 18.sp
             )
         }
@@ -284,13 +280,13 @@ fun UploadButton(isUploading: Boolean, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         shape = RoundedCornerShape(5.dp),
-        colors = ButtonDefaults.buttonColors(main_green),
+        colors = ButtonDefaults.buttonColors(colors.error),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 30.dp, vertical = 20.dp)
     ) {
         if (isUploading) {
-            CircularProgressIndicator(color = Color.White)
+            CircularProgressIndicator(color = colors.onPrimary)
         } else {
             Text(
                 text = "Upload",
@@ -315,7 +311,5 @@ fun validateInputs(
 @Composable
 @Preview(showBackground = true)
 fun AddShoesScreenPreview() {
-    WazitoECommerceTheme {
-        AddShoesScreen(navController = rememberNavController())
-    }
+    AddShoesScreen(navController = rememberNavController())
 }

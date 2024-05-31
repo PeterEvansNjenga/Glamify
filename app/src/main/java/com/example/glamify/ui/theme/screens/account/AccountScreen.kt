@@ -1,3 +1,5 @@
+@file:Suppress("LocalVariableName")
+
 package com.example.glamify.ui.theme.screens.account
 
 import android.widget.Toast
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.AccountBox
@@ -25,11 +28,11 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -46,17 +49,21 @@ import com.example.glamify.R
 import com.example.glamify.models.AuthViewModel
 import com.example.glamify.navigation.LOGIN_URL
 import com.example.glamify.navigation.SIGNUP_URL
-import com.example.glamify.ui.theme.card_green
-import com.example.glamify.ui.theme.home_black
 
 @Composable
-fun AccountScreen(navController: NavHostController) {
+fun AccountScreen(navController: NavHostController, ToggleTheme: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(home_black)
+            .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState())
     ) {
+        Text(
+            text = "Account Screen",
+            fontSize = 24.sp,
+            color = colors.onBackground,
+            modifier = Modifier.padding(16.dp)
+        )
         val mContext = LocalContext.current
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -68,7 +75,7 @@ fun AccountScreen(navController: NavHostController) {
                     .size(70.dp),
                 shape = RoundedCornerShape(50),
                 colors = CardDefaults.cardColors(
-                    containerColor = card_green
+                    containerColor = colors.onBackground
                 )
             ) {
                 Image(
@@ -89,7 +96,7 @@ fun AccountScreen(navController: NavHostController) {
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold,
             fontFamily = FontFamily.SansSerif,
-            color = Color.Cyan
+            color = colors.onBackground
         )
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -143,13 +150,13 @@ fun AccountItem(icon: ImageVector, text: String) {
         Icon(
             imageVector = icon,
             contentDescription = null,
-            tint = Color.Cyan
+            tint = colors.onBackground
         )
         Spacer(modifier = Modifier.width(7.dp))
         Text(
             text = text,
             fontSize = 19.sp,
-            color = Color.White
+            color = MaterialTheme.colorScheme.onBackground
         )
     }
 }
@@ -162,7 +169,7 @@ fun AccountCard(icon: ImageVector, text: String, onClick: () -> Unit) {
             .height(50.dp)
             .fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = card_green
+            containerColor = colors.onBackground
         )
     ) {
         Row(
@@ -171,11 +178,16 @@ fun AccountCard(icon: ImageVector, text: String, onClick: () -> Unit) {
                 .padding(7.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(imageVector = icon, contentDescription = null)
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = colors.background
+            )
             Spacer(modifier = Modifier.width(7.dp))
             Text(
                 text = text,
-                fontSize = 16.sp
+                fontSize = 16.sp,
+                color = colors.background
             )
         }
     }
@@ -184,5 +196,5 @@ fun AccountCard(icon: ImageVector, text: String, onClick: () -> Unit) {
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 fun AccountScreenPreview() {
-    AccountScreen(navController = rememberNavController())
+    AccountScreen(navController = rememberNavController(), ToggleTheme = {})
 }
