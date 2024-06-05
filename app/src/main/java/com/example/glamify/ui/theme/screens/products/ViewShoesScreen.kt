@@ -1,5 +1,6 @@
 package com.example.glamify.ui.theme.screens.products
 
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -44,7 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.example.glamify.data.Product
 import com.example.glamify.models.ProductViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -111,7 +113,7 @@ fun ShoeItem(
                     .padding(vertical = 9.dp)
             ) {
                 Image(
-                    painter = rememberImagePainter(product.imageUrl),
+                    painter = rememberAsyncImagePainter(product.imageUrl),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -153,7 +155,7 @@ fun ShoeDetails(name: String, description: String, price: String, location: Stri
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "Price: Ksh. $price", fontSize = 17.sp, color = colors.background,)
+            Text(text = "Price: Ksh. $price", fontSize = 17.sp, color = colors.background)
         }
         Spacer(modifier = Modifier.height(3.dp))
 

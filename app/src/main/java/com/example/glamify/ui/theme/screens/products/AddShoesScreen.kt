@@ -47,6 +47,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -163,7 +164,7 @@ fun CenteredIconCard() {
         Card(
             modifier = Modifier.size(70.dp),
             shape = RoundedCornerShape(50),
-            colors = CardDefaults.cardColors(containerColor = colors.primary)
+            colors = CardDefaults.cardColors(containerColor = colors.background)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.glamifysell),
@@ -259,7 +260,7 @@ fun ImagePicker(
         Button(
             onClick = { imagePicker.launch("image/*") },
             shape = RoundedCornerShape(5.dp),
-            colors = ButtonDefaults.buttonColors(colors.primary),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
             modifier = Modifier
                 .height(52.dp)
                 .fillMaxWidth()
@@ -268,7 +269,7 @@ fun ImagePicker(
         ) {
             Text(
                 text = "Select Shoe Image",
-                color = colors.primaryVariant,
+                color = Color.Black,
                 fontSize = 18.sp
             )
         }

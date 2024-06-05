@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
@@ -51,7 +52,7 @@ import com.example.glamify.navigation.LOGIN_URL
 import com.example.glamify.navigation.SIGNUP_URL
 
 @Composable
-fun AccountScreen(navController: NavHostController, ToggleTheme: () -> Unit) {
+fun AccountScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -196,5 +197,5 @@ fun AccountCard(icon: ImageVector, text: String, onClick: () -> Unit) {
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 fun AccountScreenPreview() {
-    AccountScreen(navController = rememberNavController(), ToggleTheme = {})
+    AccountScreen(navController = rememberNavController())
 }

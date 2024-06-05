@@ -31,8 +31,6 @@ fun GlamifyApp(themeController: ThemeController) {
         colorPalette = themeController.getCurrentColorPalette(),
         darkTheme = isDarkTheme
     ) {
-        AppNavHost(themeController = themeController, onToggleTheme = {
-            isDarkTheme = !isDarkTheme
-        })
+        AppNavHost(themeController = themeController)
     }
 }

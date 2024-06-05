@@ -5,12 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 object ThemeController {
     val isDarkTheme = mutableStateOf(false)
 
-    fun isDarkTheme(): Boolean {
+    private fun isDarkTheme(): Boolean {
         return isDarkTheme.value
-    }
-
-    fun toggleTheme() {
-        isDarkTheme.value = !isDarkTheme.value
     }
 
     fun getCurrentColorPalette(): AppColors {

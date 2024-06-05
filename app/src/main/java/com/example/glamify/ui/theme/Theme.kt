@@ -1,11 +1,6 @@
 package com.example.glamify.ui.theme
 
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.MaterialTheme
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.MaterialTheme.shapes
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.MaterialTheme.typography
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
@@ -16,14 +11,13 @@ fun GlamifyTheme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
-        colors = if (darkTheme) darkColors(colorPalette) else lightColors(colorPalette),
-        typography = typography,
-        shapes = shapes,
+        colorScheme = if (darkTheme) darkColorScheme(colorPalette) else lightColorScheme(colorPalette),
+        typography = MaterialTheme.typography,
         content = content
     )
 }
 
-private fun darkColors(palette: AppColors) = androidx.compose.material.darkColors(
+private fun darkColorScheme(palette: AppColors) = androidx.compose.material3.darkColorScheme(
     primary = palette.primary,
     onPrimary = palette.onPrimary,
     surface = palette.surface,
@@ -36,7 +30,7 @@ private fun darkColors(palette: AppColors) = androidx.compose.material.darkColor
     onError = Color.Black
 )
 
-private fun lightColors(palette: AppColors) = androidx.compose.material.lightColors(
+private fun lightColorScheme(palette: AppColors) = androidx.compose.material3.lightColorScheme(
     primary = palette.primary,
     onPrimary = palette.onPrimary,
     surface = palette.surface,

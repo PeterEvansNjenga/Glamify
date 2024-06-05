@@ -1,5 +1,13 @@
 package com.example.glamify.ui.theme.screens.products
 
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -20,19 +28,26 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme.colors
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.Button
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.ButtonDefaults
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.Card
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.Icon
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.MaterialTheme
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.OutlinedButton
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -61,7 +76,7 @@ fun HomeScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colors.background)
+            .background(MaterialTheme.colors.background)
     ) {
         val context = LocalContext.current
         val shoeRepository = remember { ProductViewModel(navController, context) }
@@ -69,9 +84,12 @@ fun HomeScreen(navController: NavHostController) {
         val emptyShoesListState = remember { mutableStateListOf<Product>() }
         val shoes = shoeRepository.allProducts(emptyShoeState, emptyShoesListState)
 
+        // Search query state
+        val searchQuery by remember { mutableStateOf("") }
+
         Column(
             modifier = Modifier
-                .background(colors.background)
+                .background(MaterialTheme.colors.background)
                 .fillMaxSize(),
         ) {
             Spacer(modifier = Modifier.height(5.dp))
@@ -82,7 +100,7 @@ fun HomeScreen(navController: NavHostController) {
                 Card(
                     modifier = Modifier.size(75.dp),
                     shape = RoundedCornerShape(50),
-                    colors = CardDefaults.cardColors(containerColor = colors.onPrimary)
+                    backgroundColor = MaterialTheme.colors.onPrimary
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.glamifybuy),
@@ -108,8 +126,18 @@ fun HomeScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(10.dp))
 
+            // Filtered list of products
+            val filteredShoes = if (searchQuery.isEmpty()) {
+                shoes
+            } else {
+                shoes.filter {
+                    it.name.contains(searchQuery, ignoreCase = true) ||
+                            it.description.contains(searchQuery, ignoreCase = true)
+                }
+            }
+
             LazyColumn {
-                items(shoes) { product ->
+                items(filteredShoes) { product ->
                     ProductItem(product = product)
                 }
             }
@@ -128,7 +156,7 @@ fun ProductItem(product: Product) {
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = colors.onSecondary)
+            backgroundColor = MaterialTheme.colors.onSecondary
         ) {
             Column(modifier = Modifier.padding(horizontal = 10.dp)) {
                 Box(
@@ -151,7 +179,7 @@ fun ProductItem(product: Product) {
                 Column {
                     Text(
                         text = "Name: ${product.name}",
-                        color = colors.background,
+                        color = MaterialTheme.colors.background,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -159,7 +187,7 @@ fun ProductItem(product: Product) {
 
                     Text(
                         text = "Description: ${product.description}",
-                        color = colors.background,
+                        color = MaterialTheme.colors.background,
                         fontSize = 17.sp,
                     )
                     Spacer(modifier = Modifier.height(3.dp))
@@ -171,7 +199,7 @@ fun ProductItem(product: Product) {
                         Text(
                             text = "Price: Ksh. ${product.price}",
                             fontSize = 17.sp,
-                            color = colors.background
+                            color = MaterialTheme.colors.background
                         )
                     }
                     Spacer(modifier = Modifier.height(3.dp))
@@ -183,12 +211,12 @@ fun ProductItem(product: Product) {
                         Icon(
                             imageVector = Icons.Default.LocationOn,
                             contentDescription = null,
-                            tint = colors.background
+                            tint = MaterialTheme.colors.background
                         )
                         Spacer(modifier = Modifier.width(2.dp))
                         Text(
                             text = product.location,
-                            color = colors.background,
+                            color = MaterialTheme.colors.background,
                             fontSize = 17.sp,
                             fontWeight = FontWeight.SemiBold,
                         )
@@ -215,18 +243,18 @@ fun ProductItem(product: Product) {
                                 }
                             },
                             shape = RoundedCornerShape(8.dp),
-                            colors = ButtonDefaults.outlinedButtonColors(contentColor = colors.error)
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colors.error)
                         ) {
                             Row {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Filled.Send,
                                     contentDescription = "Message Seller",
-                                    tint = colors.error
+                                    tint = MaterialTheme.colors.error
                                 )
                                 Spacer(modifier = Modifier.width(3.dp))
                                 Text(
                                     text = "Message Seller",
-                                    color = colors.error
+                                    color = MaterialTheme.colors.error
                                 )
                             }
                         }
@@ -242,7 +270,7 @@ fun ProductItem(product: Product) {
                                     Toast.makeText(context, "No dialer app found.", Toast.LENGTH_SHORT).show()
                                 }
                             },
-                            colors = ButtonDefaults.buttonColors(colors.error),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.error),
                             shape = RoundedCornerShape(8.dp)
                         ) {
                             Row {

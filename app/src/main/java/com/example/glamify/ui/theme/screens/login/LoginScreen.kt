@@ -2,6 +2,7 @@
 
 package com.example.glamify.ui.theme.screens.login
 
+//noinspection UsingMaterialAndMaterial3Libraries
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -86,15 +88,15 @@ fun LoginScreen(navController: NavHostController, themeController: ThemeControll
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             colors = outlinedTextFieldColors(
-                focusedTextColor = colors.onBackground,
-                unfocusedTextColor = colors.onBackground,
-                focusedBorderColor = colors.secondary,
-                unfocusedBorderColor = colors.background,
-                focusedLeadingIconColor = colors.secondary,
-                unfocusedLeadingIconColor = colors.primary,
-                cursorColor = colors.onBackground,
-                focusedLabelColor = colors.secondary,
-                unfocusedLabelColor = colors.primary,
+                focusedTextColor = MaterialTheme.colors.onBackground,
+                unfocusedTextColor = MaterialTheme.colors.onBackground,
+                focusedBorderColor = MaterialTheme.colors.secondary,
+                unfocusedBorderColor = MaterialTheme.colors.error,
+                focusedLeadingIconColor = MaterialTheme.colors.secondary,
+                unfocusedLeadingIconColor = MaterialTheme.colors.error,
+                cursorColor = MaterialTheme.colors.onBackground,
+                focusedLabelColor = MaterialTheme.colors.secondary,
+                unfocusedLabelColor = MaterialTheme.colors.error,
             ),
             label = { Text(text = "Email") }
         )
@@ -118,15 +120,15 @@ fun LoginScreen(navController: NavHostController, themeController: ThemeControll
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             colors = outlinedTextFieldColors(
-                focusedTextColor = colors.onBackground,
-                unfocusedTextColor = colors.onBackground,
-                focusedBorderColor = colors.secondary,
-                unfocusedBorderColor = colors.primary,
-                focusedLeadingIconColor = colors.secondary,
-                unfocusedLeadingIconColor = colors.primary,
-                cursorColor = colors.onBackground,
-                focusedLabelColor = colors.secondary,
-                unfocusedLabelColor = colors.primary,
+                focusedTextColor = MaterialTheme.colors.onBackground,
+                unfocusedTextColor = MaterialTheme.colors.onBackground,
+                focusedBorderColor = MaterialTheme.colors.secondary,
+                unfocusedBorderColor = MaterialTheme.colors.error,
+                focusedLeadingIconColor = MaterialTheme.colors.secondary,
+                unfocusedLeadingIconColor = MaterialTheme.colors.error,
+                cursorColor = MaterialTheme.colors.onBackground,
+                focusedLabelColor = MaterialTheme.colors.secondary,
+                unfocusedLabelColor = MaterialTheme.colors.error,
             ),
             label = { Text(text = "Password") },
         )
@@ -146,7 +148,7 @@ fun LoginScreen(navController: NavHostController, themeController: ThemeControll
                 }
             },
             shape = RoundedCornerShape(5.dp),
-            colors = ButtonDefaults.buttonColors(colors.primary),
+            colors = ButtonDefaults.buttonColors(MaterialTheme.colors.error),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 30.dp, vertical = 0.dp)
@@ -167,7 +169,7 @@ fun LoginScreen(navController: NavHostController, themeController: ThemeControll
             textAlign = TextAlign.Center,
             fontSize = 15.sp,
             fontFamily = FontFamily.Serif,
-            color = colors.primary
+            color = MaterialTheme.colors.error
         )
     }
 }

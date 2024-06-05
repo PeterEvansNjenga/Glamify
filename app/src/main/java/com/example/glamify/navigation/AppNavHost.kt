@@ -2,6 +2,7 @@ package com.example.glamify.navigation
 
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.foundation.layout.padding
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,7 +26,6 @@ import com.example.glamify.ui.theme.screens.splash.SplashScreen
 fun AppNavHost(
     navController: NavHostController = rememberNavController(),
     startDestination: String = rememberAppStartDestination(navController),
-    onToggleTheme: () -> Unit,
     themeController: ThemeController
 ) {
     AuthViewModel(navController, LocalContext.current)
@@ -56,7 +56,7 @@ fun AppNavHost(
                 ViewShoesScreen(navController = navController)
             }
             composable(ACCOUNT_URL) {
-                AccountScreen(navController = navController, ToggleTheme = onToggleTheme)
+                AccountScreen(navController = navController)
             }
             composable(ABOUT_URL) {
                 AboutScreen()
