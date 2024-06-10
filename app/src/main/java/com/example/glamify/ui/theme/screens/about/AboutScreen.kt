@@ -86,7 +86,7 @@ fun AboutScreen() {
                 .padding(horizontal = 45.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.buyscreen),
+                painter = painterResource(id = R.drawable.buy),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.FillBounds
@@ -109,7 +109,7 @@ fun AboutScreen() {
                 .padding(horizontal = 45.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.sellscreen),
+                painter = painterResource(id = R.drawable.sell),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.FillBounds
@@ -132,7 +132,7 @@ fun AboutScreen() {
                 .padding(horizontal = 45.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.menu),
+                painter = painterResource(id = R.drawable.account),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.FillBounds
