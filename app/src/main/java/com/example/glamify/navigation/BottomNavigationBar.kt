@@ -28,14 +28,14 @@ fun BottomNavigationBar(navController: NavHostController) {
         About
     )
 
-    BottomNavigation(
-        backgroundColor = Color.White,
-        contentColor = Color.Black
-    ) {
-        val navBackStackEntry = navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry.value?.destination?.route
+    val navBackStackEntry = navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry.value?.destination?.route
 
-        if (currentRoute !in listOf(LOGIN_URL, SIGNUP_URL, SPLASH_URL)) {
+    if (currentRoute !in listOf(LOGIN_URL, SIGNUP_URL, SPLASH_URL)) {
+        BottomNavigation(
+            backgroundColor = Color.Black,
+            contentColor = Color.White
+        ) {
             items.forEach { item ->
                 BottomNavigationItem(
                     icon = { Icon(imageVector = item.icon, contentDescription = item.title) },
@@ -47,8 +47,8 @@ fun BottomNavigationBar(navController: NavHostController) {
                             launchSingleTop = true
                         }
                     },
-                    selectedContentColor = Color.Blue,
-                    unselectedContentColor = Color.Black
+                    selectedContentColor = Color.Cyan,
+                    unselectedContentColor = Color.White
                 )
             }
         }
